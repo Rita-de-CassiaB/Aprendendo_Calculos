@@ -1,0 +1,67 @@
+PYTHON -- Anotações sobre a aula 
+
+ANÁLISE DE DADOS
+
+Mais alto nível que o Java (Mais específico e mais rápido para o programador, porém é mais pesado para processar)
+
+Framework -- encapsulamento de várias bibliotecas, um facilitador 
+
+Vamos iniciar com Python e finalizar com o R
+
+Análises estáticas (com pouco fluxo) - R
+
+Python consegue criar projetos com IA e consegue lidar com grande fluxo de dados 
+
+Tudo de sofware feito pelas pessoas é necessário um hardware para manter o software
+
+Por ser Open Source existem mais pessoas disponíveis para resolver bugs/problemas e ajudar as pessoas a utilizar
+
+Um sistema todo em python é perigoso, pois pode existir problemas com bibliotecas desatualizadas
+
+PROJETO SEMESTRAL: CAPTURAR DADOS DE MÁQUINA
+
+Os gráficos em Python são um problemas, pois é necessário a instalação de bibliotecas -- Melhor utilizar o R
+
+
+BIG DATA -- Velocidade, Volume e Variedade
+	Dado estruturado - tabela
+	Dado meio estruturado - texto
+	Dado não estruturado - foto, video, audio
+
+Python é uma Linguagem de alto nível
+BAIXO NÍVEL -- Linguagem de máquina e linguagem de montagem (Assembly)- alocação de bit 0 e 1
+ALTO NÍVEL -- Python, JAVA , JavaScript, C, C++ - mais próximo do humano
+ c 
+c#
+c++
+
+Linguagem Interpretada - Código fonte + Interpretador para cada sistema operacional 
+
+Linguagem Compilada - Código Fonte transformado em objeto e em Byte-Code -- Linguagem em C (Python, Java, C++, node) -- traduz sem interpretar
+
+Linguagem com Byte-Code - uma mistura das duas linguagens
+
+UTILIZANDO PYTHON PELO CMD 
+Dentro do Cmd, digitar py ou python 
+Não armazena dados
+Trabalhar com operações matemáticas e variáveis sem precisar declarar
+
+- maiuscula e minuscula são diferentes
+
+-- Indentação: Python é considerado código limpo. Como não é utilizado "{}" é utilizado o espaço entre as escritas.Também não é utilizado ";"
+
+É necessário padronizar a indentação, se não tiver a padronização dará erro
+para sair 
+
+Para sair do cmd é necessário usar o comando exit() ou Ctrl Z
+ 
+Para comentar usamos #
+É necessário atualizar os valores após mudar o valor das variáveis
+
+Não se pode utilizar virgulas nos números, apenas ponto final 
+-- virgula = números diferentes 
+-- ponto = números com casas decimais
+
+
+
+
