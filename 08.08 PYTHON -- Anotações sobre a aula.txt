@@ -62,6 +62,20 @@ Não se pode utilizar virgulas nos números, apenas ponto final
 -- virgula = números diferentes 
 -- ponto = números com casas decimais
 
+para descobrir o tipo de dado, o comando é type() usando dentro do parênteses o dado procurado 
+Raiz quadrada -- a**(1/2) - a**(2)
+
+FROM MATH IMPORT POW
+ -- math biblioteca
+ -- pow função 
+ -- from e import deixa você utilizar a biblioteca
+ -- Quanto mais bibliotecas são instaladas, mais o arquivo fica pesado
+Pip install = Npm install
+
+As requisições da web são assíncronas 
+
+
+REVISAR ARQUIVO E REFAZER OS ARQUIVOS -- até potência
 
 
 
