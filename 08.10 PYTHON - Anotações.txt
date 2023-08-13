@@ -1,0 +1,9 @@
+PYTHON - Anotações 08.10
+
+Quando é trabalhado com variáveis, elas são executadas apenas naquele momento.
+
+-- pow( , ) :o para operações matemáticas
+-- o print("  ", ): para retornar o resultado
+-- for x in range (len(vetor)):
+     print (vetor[x])
+for em Python
