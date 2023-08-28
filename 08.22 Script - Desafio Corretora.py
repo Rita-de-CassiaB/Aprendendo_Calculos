@@ -19,17 +19,36 @@ print('Corretora Guide', Guide)
 print('Corretora Nova_Futura',Nova_Futura)
 
 Comum = Elite.intersection(Easyvest, Guide, Nova_Futura, Ágora, Órama, Ativa, Genial)
+if (Comum == set()):
+    Comum = 'nenhuma'
 print ('As ações em comum entre todas as Corretoras são:', Comum)
-
-print(Ativa)
-print(Easyvest)
-print(Guide)
-print(Elite)
+print('As corretoras escolhidas foram: Ativa, Easyvest, Guide e Elite')
 
 Escolhidas = Elite.intersection(Ativa, Easyvest, Guide)
 print ('As ações em comum entre as Corretoras Ativa, Easyvest, Guide e Elite são:', Escolhidas)
 
 Unica = (Easyvest - Ativa - Guide - Elite)
 print ('As ações únicas entre as Corretoras Ativa, Easyvest, Guide e Elite são:', Unica)
+
+subsetAE = Ativa.issubset(Easyvest)
+subsetAG = Ativa.issubset(Guide)
+subsetAEE = Ativa.issubset(Elite)
+
+supersetAE = Ativa.issuperset(Easyvest)
+supersetAG = Ativa.issuperset(Guide)
+supersetAEE = Ativa.issuperset(Elite)
+
+print('Todos os resultados de pertinência com subconjuntos e superconjuntos entre essas corretoras são:',subsetAE,subsetAG,subsetAEE, 'e', supersetAE,supersetAG,supersetAEE, 'em sequência')
+
+print('Conjunto de ações da Ativa:', Ativa)
+print('Conjunto de ações da Easynvest:', Easyvest)
+print('Conjunto de ações da Guide:', Guide)
+print('Conjunto de ações da Elite:', Elite)
+
+
+
+
+
+
 
 
