@@ -1,0 +1,151 @@
+
+C:\Users\ritad>py
+Python 3.11.4 (tags/v3.11.4:d2340ef, Jun  7 2023, 05:45:37) [MSC v.1934 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> pip install mysql-connector-python
+  File "<stdin>", line 1
+    pip install mysql-connector-python
+        ^^^^^^^
+SyntaxError: invalid syntax
+>>> pip instal mysql-connector-python
+  File "<stdin>", line 1
+    pip instal mysql-connector-python
+        ^^^^^^
+SyntaxError: invalid syntax
+>>> pip install mysql-connector-python
+  File "<stdin>", line 1
+    pip install mysql-connector-python
+        ^^^^^^^
+SyntaxError: invalid syntax
+>>> ^Z
+
+
+C:\Users\ritad>pip install mysql-conector-python
+ERROR: Could not find a version that satisfies the requirement mysql-conector-python (from versions: none)
+ERROR: No matching distribution found for mysql-conector-python
+
+[notice] A new release of pip is available: 23.1.2 -> 23.2.1
+[notice] To update, run: C:\Users\ritad\AppData\Local\Programs\Python\Python311\python.exe -m pip install --upgrade pip
+
+C:\Users\ritad>pip install mysql-connector-python
+Collecting mysql-connector-python
+  Downloading mysql_connector_python-8.1.0-cp311-cp311-win_amd64.whl (10.8 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.8/10.8 MB 835.4 kB/s eta 0:00:00
+Collecting protobuf<=4.21.12,>=4.21.1 (from mysql-connector-python)
+  Downloading protobuf-4.21.12-cp310-abi3-win_amd64.whl (527 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 527.0/527.0 kB 718.7 kB/s eta 0:00:00
+Installing collected packages: protobuf, mysql-connector-python
+Successfully installed mysql-connector-python-8.1.0 protobuf-4.21.12
+
+[notice] A new release of pip is available: 23.1.2 -> 23.2.1
+[notice] To update, run: C:\Users\ritad\AppData\Local\Programs\Python\Python311\python.exe -m pip install --upgrade pip
+
+C:\Users\ritad>py
+Python 3.11.4 (tags/v3.11.4:d2340ef, Jun  7 2023, 05:45:37) [MSC v.1934 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> py
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'py' is not defined
+>>> import mysql.connector
+>>> try: cnx=mysql.connector.connect(user='davi', password='#Gf47148790816', host = 'localhost', database='teste')
+... except mysql.connector.Error as err:
+...     if err.errno == errorcode.ER_ACESS_DENIED_ERROR:
+...             print("erro de acesso")
+...     else:
+...             cnx.close()
+...
+>>> print(cnx)
+<mysql.connector.connection_cext.CMySQLConnection object at 0x00000219B795BED0>
+>>> teste_foda = ("INSERT INTO foda"
+...     "(nome)"
+...     "VALUES (%s))
+  File "<stdin>", line 3
+    "VALUES (%s))
+    ^
+SyntaxError: unterminated string literal (detected at line 3)
+>>> teste_foda = ("INSERT INTO foda"
+...     "(nome)"
+...     "VALUES (%s)")
+>>> data_foda = ("manjeRICAO")
+>>> cursor = cnx.cursor()
+>>> cursor.execute(teste_foda, data_foda)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "C:\Users\ritad\AppData\Local\Programs\Python\Python311\Lib\site-packages\mysql\connector\cursor_cext.py", line 317, in execute
+    prepared = self._cnx.prepare_for_mysql(params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ritad\AppData\Local\Programs\Python\Python311\Lib\site-packages\mysql\connector\connection_cext.py", line 816, in prepare_for_mysql    raise ProgrammingError(
+mysql.connector.errors.ProgrammingError: Could not process parameters: str(manjeRICAO), it must be of type list, tuple or dict
+>>> data_foda = ('manjeRICAO')
+>>> cursor.execute(teste_foda, data_foda)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "C:\Users\ritad\AppData\Local\Programs\Python\Python311\Lib\site-packages\mysql\connector\cursor_cext.py", line 317, in execute
+    prepared = self._cnx.prepare_for_mysql(params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ritad\AppData\Local\Programs\Python\Python311\Lib\site-packages\mysql\connector\connection_cext.py", line 816, in prepare_for_mysql    raise ProgrammingError(
+mysql.connector.errors.ProgrammingError: Could not process parameters: str(manjeRICAO), it must be of type list, tuple or dict
+>>> data_foda = (null,'manjeRICAO')
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'null' is not defined
+>>> data_foda = ('','manjeRICAO')
+>>> cursor.execute(teste_foda, data_foda)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "C:\Users\ritad\AppData\Local\Programs\Python\Python311\Lib\site-packages\mysql\connector\cursor_cext.py", line 325, in execute
+    raise ProgrammingError(
+mysql.connector.errors.ProgrammingError: Not all parameters were used in the SQL statement
+>>> teste_foda = ("INSERT INTO foda"
+...     "VALUES (%s)")
+>>>     "(id, nome)"
+  File "<stdin>", line 1
+    "(id, nome)"
+IndentationError: unexpected indent
+>>> teste_foda = ("INSERT INTO foda"
+...     "VALUES (%s)")
+>>>     "(id, nome) "
+  File "<stdin>", line 1
+    "(id, nome) "
+IndentationError: unexpected indent
+>>> teste_foda = ("INSERT INTO foda"
+...     "VALUES (%s)")
+>>>
+>>>
+>>> teste_foda = ("INSERT INTO foda"
+...     "VALUES (%s)")
+>>> teste_foda = ("INSERT INTO foda"
+...     "VALUES (%s)")
+>>> teste_foda = ("INSERT INTO foda"
+...     "(id, nome) "
+...     "VALUES (%s, %s)")
+>>> cursor.execute(teste_foda, data_foda)
+Traceback (most recent call last):
+  File "C:\Users\ritad\AppData\Local\Programs\Python\Python311\Lib\site-packages\mysql\connector\connection_cext.py", line 633, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Incorrect integer value: '' for column 'id' at row 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "C:\Users\ritad\AppData\Local\Programs\Python\Python311\Lib\site-packages\mysql\connector\cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+             ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ritad\AppData\Local\Programs\Python\Python311\Lib\site-packages\mysql\connector\opentelemetry\context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ritad\AppData\Local\Programs\Python\Python311\Lib\site-packages\mysql\connector\connection_cext.py", line 641, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.DatabaseError: 1366 (HY000): Incorrect integer value: '' for column 'id' at row 1
+>>> data_foda = ('1','manjeRICAO')
+>>> cursor.execute(teste_foda, data_foda)
+>>> cnx.commit()
+>>>
+
+
+
+
+
+
