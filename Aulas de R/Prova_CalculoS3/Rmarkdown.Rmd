@@ -1,0 +1,93 @@
+---
+title: "Prova Sprint 3"
+author: "Rita de Cássia"
+date: "2023-11-21"
+output: html_document
+---
+
+Inserindo os dados versão csv feitos pelo excel
+```{r}
+base <- read.csv("C:/Users/ritad/Desktop/Faculdade/Aprendendo_Calculos/Aulas de R/Prova_CalculoS3/Dados_prova_calorias.csv", sep=";")
+View(base)
+```
+
+### Realizando um diagrama de dispersão com os dados 
+```{r}
+par(mfrow = c(1, 1))
+plot(base$Estimadas, base$Encontradas, main = "Diagrama de dispersão: Calorias", xlab = "Estimadas", ylab="Encontradas")
+```
+
+#### Breve Análise:
+São poucos os dados disponibilizados, mas é perceptível que estão bem distribuídos
+
+### Análise de regressão
+```{r}
+modelo <- lm(base$Estimadas ~ base$Encontradas)
+summary(modelo)
+```
+
+#### Breve Análise:
+Com o summary podemos perceber que esse modelo se encaixou aos dados, principalmente, pois 46% da variação desses dados são explicados pelos preditores, podemos ver isso ao fazer o Multiple R-Squared que está no valor de 0.6798 ao quadrado.
+A distância entre a linha de regressão e os valores é de 80.54 sendo um valor baixo e quanto menor ele for, melhor será.
+
+```{r}
+par(mfrow=c(2,2))
+plot(modelo, which = 1:4)
+
+```
+
+#### Breve Análise:
+Com esse plot podemos ver os outliers na sessão de Cook-Distance
+
+### Análise de Correlação
+
+```{r}
+# Coeficiente de correlação
+coeficiente_correlacao <- cor(base$Estimadas, base$Encontradas)
+coeficiente_correlacao
+
+# Teste de Correlação com Intervalo de Confiança
+cor_test_result <- cor.test(base$Estimadas, base$Encontradas, conf.level = 0.95)
+cor_test_result
+```
+
+#### Breve Análise:
+
+Pode-se observar que a correlação entre esses dados é forte, principalmente pois os dois valores deram acima de 80%
+
+### Histograma 
+```{r}
+par(mfrow = c(1, 2))
+hist(base$Estimadas, xlab= "Estimadas", ylab = "Frequencia de aparência dos valores da base", main = "Histograma A")
+hist(base$Encontradas, xlab = "Encontradas", main = "Histograma B")
+```
+
+#### Breve Análise:
+Por meio desses histograma podemos confirmar que os valores de estimados realmente são maiores do que os encontrados
+
+### Regressão Linear sem outliers
+
+```{r}
+par(mfrow=c(1,1))
+base_t <- subset(base, Estimadas < 200)
+plot(base_t$Estimadas, main = "Diagrama de dispersão: Dados abaixo de 200 calorias", ylab = "Estimadas")
+```
+
+#### Breve análise:
+Sem os outliers o gráfico de dispersão mudou, se tornando menos curvado.
+
+### Análise de Correlação sem outliers
+
+```{r}
+# Coeficiente de correlação
+coeficiente_correlacao2 <- cor(base_t$Estimadas, base_t$Encontradas)
+coeficiente_correlacao2
+
+# Teste de Correlação com Intervalo de Confiança
+cor_test_result2 <- cor.test(base_t$Estimadas, base_t$Encontradas, conf.level = 0.95)
+cor_test_result2
+```
+
+#### Breve Análise:
+
+Pode-se observar que a correlação entre esses dados se tornou ainda mais forte depois da retirada dos outliers, pois os dois valores deram acima de 90%

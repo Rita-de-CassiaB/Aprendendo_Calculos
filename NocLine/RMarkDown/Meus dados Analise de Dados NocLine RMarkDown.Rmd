@@ -1,0 +1,494 @@
+---
+title: "Relatorio NocLine"
+author: "Rita de Cássia"
+date: "2023-11-12"
+output: html_document
+---
+# Análise de Dados: Plots e Segmentos
+
+## Inserção de dados
+
+```{r}
+# Leitura de dados Csv de CPU
+etl.cpu.view <- read.csv("C:/Users/ritad/Desktop/Faculdade/Aprendendo_Calculos/NocLine/RStudio NocLine/etl-cpu-view.csv", sep=";")
+
+#Leitura de dados Csv de RAM
+etl.ram.view <- read.csv("C:/Users/ritad/Desktop/Faculdade/Aprendendo_Calculos/NocLine/RStudio NocLine/etl-ram-view.csv", sep=";")
+
+
+#Leitura de dados Csv de DISCO
+etl.disco.view <- read.csv("C:/Users/ritad/Desktop/Faculdade/Aprendendo_Calculos/NocLine/RStudio NocLine/etl-disco-view.csv", sep=";")
+
+#Leitura de dados Csv de REDE
+etl.rede.view <- read.csv("C:/Users/ritad/Desktop/Faculdade/Aprendendo_Calculos/NocLine/RStudio NocLine/etl-rede-view.csv", sep=";")
+
+
+# Adicione uma data fictícia para as horas
+data_hora <- as.POSIXct(paste(Sys.Date(), etl.cpu.view$data_hora))
+par(mfrow=c(1,1), mar=c(4,4,4,4))
+
+```
+
+## Criando os gráficos com marcadores
+
+### Gráfico de CPU
+```{r}
+
+# Plotando o gráfico de CPU
+plot(data_hora, etl.cpu.view$dado_coletado, type = "l", col = "black", xlab = "Hora", ylab = "Uso de CPU", main = "Uso de CPU x Tempo")
+
+# Adicionando linha horizontal para demarcar a média dos valores
+mean_value <- mean(etl.cpu.view$dado_coletado)
+segments(min(data_hora), mean_value, max(data_hora), mean_value, col = "#FFD700", lty = 1, lwd =2)
+
+# Calculando o primeiro quartil - estado estável (Q1)
+priQ_value <- quantile(etl.cpu.view$dado_coletado, probs = 0.25)
+segments(min(data_hora), priQ_value, max(data_hora), priQ_value, col = "#00CED1", lty = 1, lwd = 2)
+
+# Calculando o terceiro quartil - estado de perigo (Q3)
+terQ_value <- quantile(etl.cpu.view$dado_coletado, probs = 0.75)
+segments(min(data_hora), terQ_value, max(data_hora), terQ_value, col = "#DC143C", lty = 1, lwd = 2)
+
+# Adicionando as legendas
+legend("topright", legend = c("Perigo", "Risco", "Estável"), col = c("#DC143C", "#FFD700", "#00CED1"), lty = 1)
+```
+
+### Gráfico de RAM
+
+```{r}
+
+# Plotando o gráfico de RAM
+plot(data_hora, etl.ram.view$usado, type = "l", col = "black", xlab = "Hora", ylab = "Uso de RAM", main = "Uso de RAM x Tempo")
+
+# Adicionando linha horizontal para demarcar a média dos valores
+mean_value <- mean(etl.ram.view$usado)
+segments(min(data_hora), mean_value, max(data_hora), mean_value, col = "#FFD700", lty = 1, lwd = 2)
+
+# Calculando o primeiro quartil - estado estável (Q1)
+priQ_value <- quantile(etl.ram.view$usado, probs = 0.25)
+segments(min(data_hora), priQ_value, max(data_hora), priQ_value, col = "#00CED1", lty = 1, lwd = 2)
+
+# Calculando o terceiro quartil - estado de perigo (Q3)
+terQ_value <- quantile(etl.ram.view$usado, probs = 0.75)
+segments(min(data_hora), terQ_value, max(data_hora), terQ_value, col = "#DC143C", lty = 1, lwd = 2)
+
+# Adicionando as legendas
+legend("topright", legend = c("Perigo", "Risco", "Estável"), col = c("#DC143C", "#FFD700", "#00CED1"), lty = 1)
+
+```
+
+### Gráfico de DISCO
+
+```{r}
+
+# Plotando o gráfico de DISCO
+plot(data_hora, etl.disco.view$usado, type = "l", col = "black", xlab = "Hora", ylab = "Uso de Disco", main = "Uso de Disco x Tempo")
+
+# Adicionando linha horizontal para demarcar a média dos valores
+mean_value <- mean(etl.disco.view$usado)
+segments(min(data_hora), mean_value, max(data_hora), mean_value, col = "#FFD700", lty = 1, lwd = 2)
+
+# Calculando o primeiro quartil - estado estável (Q1)
+priQ_value <- quantile(etl.disco.view$usado, probs = 0.25)
+segments(min(data_hora), priQ_value, max(data_hora), priQ_value, col = "#00CED1", lty = 1, lwd = 2)
+
+# Calculando o terceiro quartil - estado de perigo (Q3)
+terQ_value <- quantile(etl.disco.view$usado, probs = 0.75)
+segments(min(data_hora), terQ_value, max(data_hora), terQ_value, col = "#DC143C", lty = 1, lwd = 2)
+
+# Adicionando as legendas
+legend("topright", legend = c("Perigo", "Risco", "Estável"), col = c("#DC143C", "#FFD700", "#00CED1"), lty = 1)
+```
+
+
+### Gráficos de REDE - Bytes Enviados e Bytes Recebidos
+
+```{r}
+#Bytes Enviados
+
+# Plotando o gráfico de REDE
+plot(data_hora, etl.rede.view$env_mb, type = "l", col = "black", xlab = "Hora", ylab = "Bytes Enviados de Rede", main = "Bytes Enviados de Rede x Tempo")
+
+
+# Calculando o primeiro quartil - estado estável (Q1)
+priQ_value <- quantile(etl.rede.view$env_mb, probs = 0.25)
+segments(min(data_hora), priQ_value, max(data_hora), priQ_value, col = "#00CED1", lty = 1, lwd = 2)
+
+# Calculando o terceiro quartil - estado de perigo (Q3)
+terQ_value <- quantile(etl.rede.view$env_mb, probs = 0.75)
+segments(min(data_hora), terQ_value, max(data_hora), terQ_value, col = "#DC143C", lty = 1, lwd = 2)
+
+# Adicionando as legendas
+legend("topright", legend = c("Perigo", "Risco", "Estável"), col = c("#DC143C", "#FFD700", "#00CED1"), lty = 1)
+
+```
+
+```{r}
+#Bytes Recebidos
+
+# Crie o gráfico de linha
+plot(data_hora, etl.rede.view$rec_mb, type = "l", col = "black", xlab = "Hora", ylab = "Bytes Recebidos de Rede", main = "Bytes Recebidos de Rede x Tempo")
+
+# Adicione uma linha horizontal na média
+mean_value <- mean(etl.rede.view$rec_mb)
+segments(min(data_hora), mean_value, max(data_hora), mean_value, col = "#FFD700", lty = 1, lwd = 2)
+
+# Calcule o primeiro quartil - estado estável (Q1)
+priQ_value <- quantile(etl.rede.view$rec_mb, probs = 0.25)
+segments(min(data_hora), priQ_value, max(data_hora), priQ_value, col = "#00CED1", lty = 1, lwd = 2)
+
+# Calculando o terceiro quartil - estado de perigo (Q3)
+terQ_value <- quantile(etl.rede.view$rec_mb, probs = 0.75)
+segments(min(data_hora), terQ_value, max(data_hora), terQ_value, col = "#DC143C", lty = 1, lwd = 2)
+
+# Adicionando as legendas
+legend("topright", legend = c("Perigo", "Risco", "Estável"), col = c("#DC143C", "#FFD700", "#00CED1"), lty = 1)
+
+
+```
+
+# Análise de Dados: Frequência e Distribuição
+
+## Inserção de dados
+
+```{r}
+# Dados de CPU, RAM e DISCO
+data_cpu<- c(etl.cpu.view$dado_coletado)
+data_ram<- c(etl.ram.view$usado)
+data_disco<- c(etl.disco.view$usado)
+
+```
+
+
+## Análise de frequência e distribuição dos dados
+### CPU
+
+```{r}
+# Plotando um boxplot referente a distribuição
+
+par(mfrow=c(1,1), mar=c(4,4,4,4))
+boxplot(data_cpu, 
+        main = "Distribuição de Capturas de CPU",
+        ylab = "Capturas de Uso de CPU",
+        col = "#191970",
+        border = "black",
+        horizontal = FALSE)
+
+# Exibindo um histórico referente a frequência
+par(mfrow=c(1,1), mar=c(4,4,4,4))
+hist(etl.cpu.view$dado_coletado, 
+     main = "Frequência das Capturas de CPU",
+     xlab = "Capturas de Uso de CPU",
+     ylab = "Frequência de Dados",
+     col = "#191970",
+     border = "black")
+
+
+resumo_cpu <- summary(etl.cpu.view$dado_coletado)
+resumo_cpu
+
+```
+
+### RAM
+```{r}
+
+# Plotando um boxplot referente a distribuição
+par(mfrow=c(1,1), mar=c(4,4,4,4))
+boxplot(data_ram, 
+        main = "Distribuição de Capturas de RAM",
+        ylab = "Capturas de Uso de RAM",
+        col = "#4C5CAD",
+        border = "black",
+        horizontal = FALSE)
+
+# Exibindo um histórico referente a frequência
+par(mfrow=c(1,1), mar=c(4,4,4,4))
+hist(etl.ram.view$usado, 
+     main = "Frequência das Capturas de RAM",
+     xlab = "Capturas de Uso de RAM",
+     ylab = "Frequência de Dados",
+     col = "#4C5CAD",
+     border = "black")
+
+resumo_ram <- summary(etl.ram.view$usado)
+resumo_ram
+
+```
+### DISCO
+```{r}
+# Plotando um boxplot referente a distribuição
+par(mfrow=c(1,1), mar=c(4,4,4,4))
+boxplot(data_disco, 
+        main = "Distribuição de Capturas de Disco",
+        ylab = "Capturas de Uso de Disco",
+        col = "#A1B0FF",
+        border = "black",
+        horizontal = FALSE)
+
+# Exibindo um histórico referente a frequência
+par(mfrow=c(1,1), mar=c(4,4,4,4))
+hist(etl.disco.view$usado, 
+     main = "Frequência das Capturas de Disco",
+     xlab = "Capturas de Uso de Disco",
+     ylab = "Frequência de Dados",
+     col = "#A1B0FF",
+     border = "black")
+
+
+resumo_disco <- summary(etl.disco.view$usado)
+```
+
+### REDE
+
+```{r}
+# Plotando um boxplot referente a distribuição
+boxplot(etl.rede.view$env_mb, etl.rede.view$rec_mb, 
+        names = c("Enviados", "Recebidos"),  # Rótulos para os boxplots
+        main = "Distribuição de Capturas de Bytes de Rede",
+        ylab = "Capturas de Bytes",
+        col = c("#4682B4", "#ADD8E6"),  # Cores para os boxplots
+        border = "black",
+        horizontal = FALSE)
+
+# Exibindo dois histórico referente a frequência
+hist(etl.rede.view$env_mb, 
+     main = "Frequência das Capturas de Bytes Enviados",
+     xlab = "Capturas de de Bytes Enviados de Rede",
+     ylab = "Frequência de Dados",
+     col = "#4682B4",
+     border = "black")
+
+hist(etl.rede.view$rec_mb, 
+     main = "Frequência das Capturas de Bytes Recebidos",
+     xlab = "Capturas de de Bytes Recebidos de Rede",
+     ylab = "Frequência de Dados",
+     col = "#ADD8E6",
+     border = "black")
+```
+
+
+### Exibindo os resumos
+
+```{r echo=FALSE}
+
+# Resumo Bytes Recebidos
+
+resumo_rederec <- summary(etl.rede.view$rec_mb)
+resumo_rederec
+
+# Resumo Bytes Enviados
+resumo_redeenv <- summary(etl.rede.view$env_mb)
+resumo_redeenv
+
+```
+
+# Análise de Dados: Subsets e Legendas para Acompanhamento
+
+### CPU 
+```{r}
+# Calcule o primeiro quartil (Q1) e o terceiro quartil (Q3)
+q1 <- quantile(etl.cpu.view$dado_coletado, probs = 0.25)
+q3 <- quantile(etl.cpu.view$dado_coletado, probs = 0.75)
+
+# Use a função sum para contar valores acima de Q3 e abaixo de Q1
+quantidade_acima_q3 <- sum(etl.cpu.view$dado_coletado >= q3)
+quantidade_abaixo_q1 <- sum(etl.cpu.view$dado_coletado <= q1)
+quantidade_entre_q1_e_q3 <- sum(etl.cpu.view$dado_coletado > q1 & etl.cpu.view$dado_coletado < q3)
+
+
+```
+
+#### Exiba as quantidades
+
+```{r echo=FALSE}
+
+print(paste("Quantidade de dados acima do terceiro quartil (Q3):", quantidade_acima_q3))
+print(paste("Quantidade de dados abaixo do primeiro quartil (Q1):", quantidade_abaixo_q1))
+print(paste("Quantidade de dados entre Q1 e Q3:", quantidade_entre_q1_e_q3))
+
+```
+
+#### Criação de vetores
+```{r}
+
+# Crie um vetor com as quantidades
+quantidades <- c(quantidade_acima_q3,  quantidade_entre_q1_e_q3, quantidade_abaixo_q1)
+
+# Crie um vetor com os nomes das categorias
+categorias <- c("Perigo", "Risco", "Estável")
+
+# Crie o gráfico de barras
+barplot(quantidades, names.arg = categorias, col = c("#DC143C","#FFD700", "#00CED1"),
+        xlab = "Categorias", ylab = "Quantidade", main = "Quantidade de Dados por Categoria")
+
+legend("topright", legend = paste(quantidades), fill = c("#DC143C", "#FFD700", "#00CED1"))
+
+```
+
+
+### RAM 
+
+```{r}
+
+# Calcule o primeiro quartil (Q1) e o terceiro quartil (Q3)
+Rq1 <- quantile(etl.ram.view$usado, probs = 0.25)
+Rq3 <- quantile(etl.ram.view$usado, probs = 0.75)
+
+# Use a função sum para contar valores acima de Q3 e abaixo de Q1
+Rquantidade_acima_q3 <- sum(etl.ram.view$usado >= Rq3)
+Rquantidade_abaixo_q1 <- sum(etl.ram.view$usado <= Rq1)
+Rquantidade_entre_q1_e_q3 <- sum(etl.ram.view$usado > Rq1 & etl.ram.view$usado < Rq3)
+```
+
+#### Exiba as quantidades
+
+```{r echo=FALSE}
+print(paste("Quantidade de dados acima do terceiro quartil (Q3):", Rquantidade_acima_q3))
+print(paste("Quantidade de dados abaixo do primeiro quartil (Q1):", Rquantidade_abaixo_q1))
+print(paste("Quantidade de dados entre Q1 e Q3:", Rquantidade_entre_q1_e_q3))
+
+```
+
+#### Criação de vetores
+```{r}
+
+# Crie um vetor com as quantidades
+Rquantidades <- c(Rquantidade_acima_q3, Rquantidade_entre_q1_e_q3, Rquantidade_abaixo_q1)
+
+# Crie um vetor com os nomes das categorias
+Rcategorias <- c("Perigo", "Risco", "Estável")
+
+# Crie o gráfico de barras
+barplot(Rquantidades, names.arg = Rcategorias, col = c("#DC143C","#FFD700", "#00CED1"),
+        xlab = "Categorias", ylab = "Quantidade", main = "Quantidade de Dados por Categoria")
+
+legend("topright", legend = paste(Rquantidades), fill = c("#DC143C", "#FFD700", "#00CED1"))
+
+```
+
+
+### DISCO
+
+```{r}
+ 
+# Calcule o primeiro quartil (Q1) e o terceiro quartil (Q3)
+Dq1 <- quantile(etl.disco.view$usado, probs = 0.25)
+Dq3 <- quantile(etl.disco.view$usado, probs = 0.75)
+
+# Use a função sum para contar valores acima de Q3 e abaixo de Q1
+Dquantidade_acima_q3 <- sum(etl.disco.view$usado >= Dq3)
+Dquantidade_abaixo_q1 <- sum(etl.disco.view$usado <= Dq1)
+Dquantidade_entre_q1_e_q3 <- sum(etl.disco.view$usado > Dq1 & etl.disco.view$usado < Dq3)
+
+
+```
+
+#### Exiba as quantidades
+
+```{r echo=FALSE}
+print(paste("Quantidade de dados acima do terceiro quartil (Q3):", Dquantidade_acima_q3))
+print(paste("Quantidade de dados abaixo do primeiro quartil (Q1):", Dquantidade_abaixo_q1))
+print(paste("Quantidade de dados entre Q1 e Q3:", Dquantidade_entre_q1_e_q3))
+
+```
+
+#### Criação de vetores
+```{r}
+
+# Crie um vetor com as quantidades
+Dquantidades <- c(Dquantidade_acima_q3, Dquantidade_entre_q1_e_q3, Dquantidade_abaixo_q1)
+
+# Crie um vetor com os nomes das categorias
+Dcategorias <- c("Perigo", "Risco", "Estável")
+
+# Crie o gráfico de barras
+barplot(Dquantidades, names.arg = Dcategorias, col = c("#DC143C","#FFD700", "#00CED1"),
+        xlab = "Categorias", ylab = "Quantidade", main = "Quantidade de Dados por Categoria")
+
+legend("topright", legend = paste(Dquantidades), fill = c("#DC143C", "#FFD700", "#00CED1"))
+
+```
+
+
+### REDE - BYTES ENVIADOS
+
+``` {r}
+
+# Calcule o primeiro quartil (Q1) e o terceiro quartil (Q3)
+REq1 <- quantile(etl.rede.view$env_mb, probs = 0.25)
+REq3 <- quantile(etl.rede.view$env_mb, probs = 0.75)
+
+# Use a função sum para contar valores acima de Q3 e abaixo de Q1
+REquantidade_acima_q3 <- sum(etl.rede.view$env_mb >= REq3)
+REquantidade_abaixo_q1 <- sum(etl.rede.view$env_mb <= REq1)
+REquantidade_entre_q1_e_q3 <- sum(etl.rede.view$env_mb > REq1 & etl.rede.view$env_mb < REq3)
+
+```
+
+#### Exiba as quantidades
+
+```{r echo=FALSE}
+print(paste("Quantidade de dados acima do terceiro quartil (Q3):", REquantidade_acima_q3))
+print(paste("Quantidade de dados abaixo do primeiro quartil (Q1):", REquantidade_abaixo_q1))
+print(paste("Quantidade de dados entre Q1 e Q3:", REquantidade_entre_q1_e_q3))
+
+```
+
+#### Criação de vetores
+```{r}
+# Crie um vetor com as quantidades
+REquantidades <- c(REquantidade_acima_q3, REquantidade_entre_q1_e_q3, REquantidade_abaixo_q1)
+
+# Crie um vetor com os nomes das categorias
+REcategorias <- c("Perigo", "Risco", "Estável")
+
+# Crie o gráfico de barras
+barplot(REquantidades, names.arg = REcategorias, col = c("#DC143C","#FFD700", "#00CED1"),
+        xlab = "Categorias", ylab = "Quantidade", main = "Quantidade de Dados por Categoria")
+
+legend("topright", legend = paste(REquantidades), fill = c("#DC143C", "#FFD700", "#00CED1"))
+
+```
+
+
+### REDE - BYTES RECEBIDOS
+
+``` {r}
+
+# Calcule o primeiro quartil (Q1) e o terceiro quartil (Q3)
+RRq1 <- quantile(etl.rede.view$rec_mb, probs = 0.25)
+RRq3 <- quantile(etl.rede.view$rec_mb, probs = 0.75)
+
+# Use a função sum para contar valores acima de Q3 e abaixo de Q1
+RRquantidade_acima_q3 <- sum(etl.rede.view$rec_mb >= RRq3)
+RRquantidade_abaixo_q1 <- sum(etl.rede.view$rec_mb <= RRq1)
+RRquantidade_entre_q1_e_q3 <- sum(etl.rede.view$rec_mb > RRq1 & etl.rede.view$rec_mb < RRq3)
+
+
+```
+
+#### Exiba as quantidades
+
+```{r echo=FALSE}
+print(paste("Quantidade de dados acima do terceiro quartil (Q3):", RRquantidade_acima_q3))
+print(paste("Quantidade de dados abaixo do primeiro quartil (Q1):", RRquantidade_abaixo_q1))
+print(paste("Quantidade de dados entre Q1 e Q3:", RRquantidade_entre_q1_e_q3))
+
+```
+
+#### Criação de vetores
+```{r}
+
+# Crie um vetor com as quantidades
+RRquantidades <- c(RRquantidade_acima_q3, RRquantidade_entre_q1_e_q3, RRquantidade_abaixo_q1)
+
+# Crie um vetor com os nomes das categorias
+RRcategorias <- c("Perigo", "Risco", "Estável")
+
+# Crie o gráfico de barras
+barplot(RRquantidades, names.arg = RRcategorias, col = c("#DC143C","#FFD700", "#00CED1"),
+        xlab = "Categorias", ylab = "Quantidade", main = "Quantidade de Dados por Categoria")
+
+legend("topright", legend = paste(RRquantidades), fill = c("#DC143C", "#FFD700", "#00CED1"))
+
+```

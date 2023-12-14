@@ -32,6 +32,7 @@ par(mfrow=c(1,1), mar=c(4,4,4,4))
 
 ### Gráfico de CPU
 ```{r}
+
 # Plotando o gráfico de CPU
 plot(data_hora, etl.cpu.view$dado_coletado, type = "l", col = "black", xlab = "Hora", ylab = "Uso de CPU", main = "Uso de CPU x Tempo")
 

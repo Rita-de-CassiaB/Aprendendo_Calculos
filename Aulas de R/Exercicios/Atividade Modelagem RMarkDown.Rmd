@@ -1,0 +1,105 @@
+---
+title: "Atividade de Calculo - Modelagem no RStudio"
+author: "Rita de Cássia"
+date: "2023-11-19"
+output: word_document
+---
+## Obtendo os dados
+```{r}
+base <- read.csv("C:/Users/ritad/Desktop/Faculdade/Aprendendo_Calculos/Aulas de R/Exercicios/base-r-wege-full.csv")
+
+par(mfrow = c(1, 2))
+plot(base$Open, base$Close, main = "Diagrama de Dispersao A", xlab = "OPEN", ylab = "CLOSE")
+plot(base$High, base$Low, main = "Diagrama de Dispersao B", xlab = "HIGH", ylab = "LOW")
+```
+
+#### Breve Análise:
+É possível observar que esses dados têm uma forte correlação positiva entre eles (proporção direta entre os dados), pois não há muita dispersão, apenas no gráfico B que ocorre uma porcentagem maior de dispersão. Existem alguns outliers, mas são poucos
+
+### Aproximando uma reta
+```{r}
+#Criando os modelos 
+modeloWegeO <- lm(base$Open ~ base$Close)
+summary(modeloWegeO)
+
+#Criando os modelos 
+modeloWegeH <- lm(base$High ~ base$Low)
+summary(modeloWegeH)
+
+par(mfrow=c(2,2))
+plot(modeloWegeO, which = 1:4)
+
+plot(modeloWegeH, which = 1:4)
+
+```
+
+#### Breve Análise:
+A partir da criação desse modelo e do summary dos dois gráficos, podemos confirmar a possibilidade de correlação positiva, nesse modelo o "Multiple R-squared" está acima de 0.97, ou seja 97%, e quanto mais próximo de 1 ele estiver menor é a probabilidade de erro ao confiar nesse modelo. Com esse modelo também podemos ver se existem outliers e como foi disse anteriormente, eles são poucos
+
+```{r}
+par(mfrow = c(1, 2))
+plot(base$Open, base$Close, main = "Diagrama de Dispersao A", xlab = "OPEN", ylab = "CLOSE")
+abline(modeloWegeO)
+
+plot(base$High, base$Low, main = "Diagrama de Dispersao B", xlab = "HIGH", ylab = "LOW")
+abline(modeloWegeH)
+
+```
+
+#### Breve Análise:
+O Diagrama A segue perfeitamente a linha de modelo encontrada, mas o B se dispersa principalmente ao final o que pode ser a indicação de que esse modelo não é tão adequado
+
+## Realizando uma regressão multipla linear
+
+```{r}
+base_completa <- base[,c("Open", "High", "Low", "Close")]
+
+pairs(base_completa)
+```
+
+#### Breve Análise:
+Agora com a  regressão multipla linear é possível observar que os dados tem uma forte correlação positiva entre eles, pois todos formam uma relação linear ou quase linear
+
+```{r}
+library(GGally)
+ggpairs(base_completa)
+summary(base_completa)
+
+modelo1 <- lm(Open ~ High + Low + Close, data = base_completa)
+
+hist(residuals(modelo1))
+
+```
+
+#### Breve Análise:
+É possível ver que há uma distribuição normal desses dados e para confirmar faremos um gráfico de valor ajustado versus resíduo
+
+```{r}
+
+plot(fitted(modelo1), residuals(modelo1))
+abline(h = 0, lty = 2)
+
+```
+
+#### Breve Análise:
+Com esse gráfico podemos confirmar que esses resíduos estão bem distribuídos pela linha, o que ajuda na confirmação de confiança do modelo
+
+```{r}
+summary(modelo1)
+
+sigma(modelo1)/mean(base_completa$Open)
+```
+#### Breve Análise:
+* O summary apresenta que não há uma grande variabilidade desses dados a partir do (>|t|). O modelo se dá útil.
+* O Multiple R-squared em 0.9951 siginifica que 99% da variância em Open pode ser explicada pelos preditores do modelo. 
+* O Residual standard error representa que os valores apresentados caem em média 0.9062 unidades da linha de regressão, ou seja, muito pouco, sendo uma medida de erro de previsõa baixa
+* Esse modelo apresenta cerca de 7,29 % de erro de acordo com o sigma
+
+
+## Conclusão
+* A partir dessa base dados, é possível observar que o modelo que mais se adequa é o modelo de regressão linear, a partir da variável de coluna Open dentro da base de dados. De acordo com a divisão feita no início dos diagramas de dispersão, é notável uma forte correlação positiva entre as variáveis chamadas "Open", "Close" e "High","Low" e com os modelos de regressão linear simples foi visto um alto valor no R-Squared o que mostra uma boa capacidade do modelo de explicar a variabilidade dos dados, os summaries, o cook distance e o hist facilitaram a observação de poucos outliers e finalmente é possível confirmar as suposições de que os modelos têm um bom desempenho tanto na explicação quanto na previsão dos dados
+
+
+
+
+
